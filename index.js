@@ -1,8 +1,7 @@
 // Calling in all required packages.
 const mysql = require('mysql');
 const inquirer = require('inquirer');
-const { allowedNodeEnvironmentFlags } = require('process');
-const { table } = require('console');
+const chalk = require('chalk');
 
 // Settings for database connection.
 const connection = mysql.createConnection({
@@ -22,12 +21,15 @@ connection.connect(function(err) {
     console.log('connected as id ' + connection.threadId);
 });
 
+// User greeting.
+console.log(chalk.blue('Welcome to the Employee Database.'));
+
 // Utilize Inquirer to prompt user for selection.
 const start = () => {
     inquirer.prompt({
         name: 'firstAction',
         type: 'list',
-        message: 'Welcome to the Employee Management System. What would you like to do?',
+        message: 'What would you like to do?',
         choices: ['View All Employees', 'View Employees by Department','View Employees by Role', 'Add Employee', 'Remove Employee', 'Update Employee Role'],
     })
     .then((answers) => {
