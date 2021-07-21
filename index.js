@@ -29,7 +29,7 @@ const start = () => {
         name: 'firstAction',
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View All Employees', 'View Employees by Department','View Employees by Role', 'Add Employee', 'Remove Employee', 'Update Employee Role'],
+        choices: ['View All Employees', 'View All Departments','View All Roles', 'Add Employee', 'Remove Employee', 'Update Employee Role'],
     })
     .then((answers) => {
         if (answers.firstAction === 'View All Employees') {
@@ -55,27 +55,27 @@ const start = () => {
     });
 };
 
-// View all information in employee table.
+// View all employees.
 const viewAll = () => {
     connection.query('SELECT * FROM employee', (err, res) => {
         if (err) throw err;
-        console.table(res);
+                console.table(res);
     });
 };
 
-// View employees by department.
+// View all departments.
 const viewDept = () => {
-    connection.query('SELECT * FROM employee WHERE department_id = 1', (err, res) => {
+    connection.query('SELECT name FROM department', (err, res) => {
         if (err) throw err;
-        console.table(res);
+                console.table(res);
     });
 };
 
-// View employees by role.
+// View all roles.
 const viewRole = () => {
-    connection.query('SELECT * FROM employee WHERE role_id = 1', (err, res) => {
+    connection.query('SELECT title FROM role', (err, res) => {
         if (err) throw err;
-        console.table(res);
+                console.table(res);
     });
 };
 
@@ -89,7 +89,7 @@ const addEmployee = () => {
         1
     ], (err, res) => {
         if (err) throw err;
-        console.log(res);
+        connection.end();
     });
 }
 
@@ -97,7 +97,7 @@ const addEmployee = () => {
 const removeEmployee = () => {
     connection.query('DELETE FROM employee WHERE id = ?', [1], (err, res) => {
         if (err) throw err;
-        console.log(res);
+        connection.end();
     });
 }
 
@@ -105,7 +105,7 @@ const removeEmployee = () => {
 const updateEmployee = () => {
     connection.query('UPDATE employee SET role_id = ? WHERE id = ?', [2, 1], (err, res) => {
         if (err) throw err;
-        console.log(res);
+        connection.end();
     });
 }
 
