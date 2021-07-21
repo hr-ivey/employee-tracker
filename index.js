@@ -73,7 +73,7 @@ const viewDept = () => {
 
 // View all roles.
 const viewRole = () => {
-    connection.query('SELECT title FROM role', (err, res) => {
+    connection.query('SELECT * FROM role', (err, res) => {
         if (err) throw err;
                 console.table(res);
     });
