@@ -14,9 +14,7 @@ An employee tracker created using node, inquirer, and MySQL. Allows the user to 
 ## Installation
 ```npm i```
 ## Usage
-![Application screenshot](/screencast.gif)
-
-Deployed: https://hr-ivey.github.io/employee-tracker
+![Application screencast](/screencast.gif)
 ## Credits
 All names included in database are from Fallout: New Vegas.
 
