@@ -7,9 +7,9 @@ const chalk = require('chalk');
 const connection = mysql.createConnection({
   host: 'localhost',
   port: '3306',
-  user: 'root'
+  user: 'root',
   password : '0017',
-  database : 'employee_db'
+  database : 'employee_db',
 });
 
 // Establish connection, or else throw error.
@@ -18,11 +18,10 @@ connection.connect(function(err) {
       console.error('error connecting: ' + err.stack);
       return;
     }
-    console.log('connected as id ' + connection.threadId);
 });
 
 // User greeting.
-console.log(chalk.blue('Welcome to the Employee Database.'));
+console.log(chalk.green('Welcome to the Employee Tracker.'));
 
 // Utilize Inquirer to prompt user for selection.
 const start = () => {
@@ -36,10 +35,10 @@ const start = () => {
         if (answers.firstAction === 'View All Employees') {
             viewAll();
         }
-        if (answers.firstAction === 'View Employees by Department') {
+        if (answers.firstAction === 'View All Departments') {
             viewDept();
         }
-        if (answers.firstAction === 'View Employees by Role') {
+        if (answers.firstAction === 'View All Roles') {
             viewRole();
         }
         if (answers.firstAction === 'Add Employee') {
@@ -60,10 +59,7 @@ const start = () => {
 const viewAll = () => {
     connection.query('SELECT * FROM employee', (err, res) => {
         if (err) throw err;
-        console.log(res);
-        res.forEach(({ id, first_name, last_name, role_id, manager_id }) => {
-          console.log('${id} | ${first_name} | ${last_name} | ${role_id} | ${manager_id}');
-        });
+        console.table(res);
     });
 };
 
@@ -71,23 +67,17 @@ const viewAll = () => {
 const viewDept = () => {
     connection.query('SELECT * FROM employee WHERE department_id = 1', (err, res) => {
         if (err) throw err;
-        console.log(res);
-        res.forEach(({ id, first_name, last_name, role_id, manager_id }) => {
-          console.log('${id} | ${first_name} | ${last_name} | ${role_id} | ${manager_id}');
-        });
+        console.table(res);
     });
-}
+};
 
 // View employees by role.
 const viewRole = () => {
     connection.query('SELECT * FROM employee WHERE role_id = 1', (err, res) => {
         if (err) throw err;
-        console.log(res);
-        res.forEach(({ id, first_name, last_name, role_id, manager_id }) => {
-          console.log('${id} | ${first_name} | ${last_name} | ${role_id} | ${manager_id}');
-        });
+        console.table(res);
     });
-}
+};
 
 // Add a new employee.
 const addEmployee = () => {
@@ -118,3 +108,5 @@ const updateEmployee = () => {
         console.log(res);
     });
 }
+
+start();
